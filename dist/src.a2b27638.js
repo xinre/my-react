@@ -105,8 +105,16 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   // Override the current require with this new one
   return newRequire;
 })({"src/index.js":[function(require,module,exports) {
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 var React = {
   createElement: createElement
+};
+var ReactDOM = {
+  render: function render(cnode, container) {
+    container.innerHTML = '';
+    return _render(cnode, container);
+  }
 };
 
 function createElement(tag, attrs) {
@@ -121,13 +129,63 @@ function createElement(tag, attrs) {
   };
 }
 
-var element = React.createElement("div", null, "123");
-var element1 = React.createElement('div', null, '12456');
-var dom = document.getElementById('root');
-console.log(dom);
-console.log(element);
-console.log(element1);
-},{}],"C:/Users/tang/AppData/Roaming/nvm/v8.8.0/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+function _render(cnode, container) {
+  if (typeof cnode === 'string') {
+    var textNode = document.createTextNode(cnode);
+    return container.appendChild(textNode);
+  }
+
+  var dom = document.createElement(cnode.tag);
+
+  if (cnode.attrs) {
+    Object.keys(cnode.attrs).forEach(function (key) {
+      var value = cnode.attrs[key];
+      setAttr(dom, key, value);
+    });
+  }
+
+  cnode.children.forEach(function (child) {
+    return _render(child, dom);
+  });
+  return container.appendChild(dom);
+}
+
+function setAttr(dom, name, value) {
+  if (name === 'className') {
+    name = 'class';
+  }
+
+  if (/on\w+/.test(name)) {
+    name = name.toLowerCase();
+    dom[name] = value || '';
+  } else if (name === 'style') {
+    if (!value || typeof value === 'string') {
+      dom.style.cssText = value || '';
+    } else if (value && _typeof(value) === 'object') {
+      for (var _name in value) {
+        dom.style[_name] = typeof value[_name] === 'number' ? value[_name] + 'px' : value[_name];
+      }
+    }
+  } else {
+    if (name in dom) {
+      dom[name] = value || '';
+    }
+
+    if (value) {
+      dom.setAttribute(name, value);
+    } else {
+      dom.removeAttribute(name);
+    }
+  }
+}
+
+function tick() {
+  var element = React.createElement("div", null, React.createElement("h1", null, "Hello, world!"), React.createElement("h2", null, "It is ", new Date().toLocaleTimeString(), "."));
+  ReactDOM.render(element, document.getElementById('root'));
+}
+
+setInterval(tick, 1000);
+},{}],"C:/Users/tanghongyu/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -154,7 +212,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59910" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "19531" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
@@ -296,5 +354,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},["C:/Users/tang/AppData/Roaming/nvm/v8.8.0/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/index.js"], null)
+},{}]},{},["C:/Users/tanghongyu/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/index.js"], null)
 //# sourceMappingURL=/src.a2b27638.map
